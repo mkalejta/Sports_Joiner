@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Event details{% endblock %}
+
+
+{% block style %}
+    main > div.container {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0 3rem 0;
+    }
+
+    .event {
+        position: relative;
+        width: 100%;
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin-bottom: 2rem;
+    }
+
+    .event::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    .event .content {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+
+    .event .left {
+        margin-left: 4rem;
+        height: 350px;
+        font-size: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .left span {
+        font-style: italic;
+        font-weight: bold;
+        color: orange;
+        font-size: 1.5rem;
+    }
+
+    .left p {
+        position: relative;
+        left: 1rem;
+    }
+
+    .create-event {
+        position: absolute;
+        right: 1rem;
+    }
+
+    .sports {
+        position: absolute;
+        left: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .right {
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-self: flex-start;
+    }
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4 border-bottom pb-1" style="font-style: italic; text-align: center;">Event Details</h2>
+    <div class="event" style="background-image: url({% static 'images/' %}{{ event.facility.sport.name }}.jpg);">
+        <div class="content">
+            <div class="left">
+                <div class="info-1">
+                    <span>Organizer: </span>
+                    <p>{{ event.organizer }}</p>
+                    <span>Facility address: </span>
+                    <p>{{ event.facility.address }}</p>
+                </div>
+                <div class="info-2">
+                    <span>Date: </span>
+                    <p>{{ event.date|date:"d.m.Y" }}</p>
+                    <span>Event start: </span>
+                    <p>{{ event.time }}</p>
+                </div>
+            </div>
+            <div class="right">
+                <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
+                <p class="description">{{ event.description }}</p>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered">
+        {% for p in event.participants.all %}
+            <td>{{ p.username }}</td>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block style %}
+    form > button {
+        margin-left: 1rem;
+    }
+
+    br + div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        Hi {{ user.username }}!
+    {% else %}
+        <br>
+        <div>
+            <p>You are not logged in</p>
+            <a href="{% url 'login' %}">Log In</a>
+        </div>
+    {% endif %}
+{% endblock %}
