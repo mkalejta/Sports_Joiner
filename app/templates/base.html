@@ -101,7 +101,7 @@
                         <li><a class="dropdown-item" href="{% url 'sign_up' %}">Register</a></li>
                         <li><a class="dropdown-item nav-link" href="{% url 'login' %}">Login</a></li>
                     {% else %}
-                        <li><a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_dashboard' request.user.id %}">Dashboard</a></li>
                         <li><a class="dropdown-item nav-link" href="{% url 'logout' %}">Log Out</a></li>
                     {% endif %}
                     </ul>

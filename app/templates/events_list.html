@@ -136,7 +136,11 @@
                         <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
                         <p class="description">{{ ele.description }}</p>
                         <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Show details</a>
-                        <a class="btn btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Join</a>
+                        {% if request.user.profile not in ele.participants.all %}
+                            <a class="btn btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Join</a>
+                        {% else %}
+                            <a class="btn disabled btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Joined</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

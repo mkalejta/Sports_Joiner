@@ -25,8 +25,13 @@ def SignUpView(request):
 
     return render(request, "registration/registration.html", {'form': form})
 
-class UserDashboard(generic.TemplateView):
-    template_name = 'dashboard.html'
+@login_required
+def user_dashboard(request, pk):
+    user = models.User.objects.get(id=pk)
+    context = {
+        'user': user,
+    }
+    return render(request, 'dashboard.html', context)
 
 
 def logout_user(request):

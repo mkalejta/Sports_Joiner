@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_filters %}
 {% block title %}Event details{% endblock %}
 
 
@@ -84,6 +85,30 @@
         gap: 0.5rem;
         align-self: flex-start;
     }
+
+    img.profile-picture {
+        width: 80px;
+        height: 80px;
+    }
+
+    .participant {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .left2, .right2 {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .right2 {
+        gap: 0.5rem;
+    }
 {% endblock %}
 
 
@@ -112,10 +137,16 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered">
-        {% for p in event.participants.all %}
-            <td>{{ p.username }}</td>
-        {% endfor %}
-    </table>
+    {% for participant in event.participants.all %}
+        <div class="participant">
+            <div class="left2">
+                <img class="rounded-circle profile-picture" src="{{ participant.profile_picture.url }}">
+                <div><a href="{% url 'user_dashboard' participant.user.id %}">@{{ participant.user.username }}</a></div>
+            </div>
+            <p class="right2">
+                <p>Age: {{ participant.age }}</p>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
