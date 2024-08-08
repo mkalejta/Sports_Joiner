@@ -1,11 +1,8 @@
-import django.views.generic as generic
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.urls import reverse_lazy
-
 from config import forms
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.messages.views import messages
 from app import models
 
@@ -95,3 +92,14 @@ def event_details(request, pk):
         'event': event,
     }
     return render(request, 'event_details.html', context)
+
+@login_required
+def join_event(request, event_id):
+    event = models.Event.objects.get(id=event_id)
+    profile = request.user.profile
+
+    if profile not in event.participants.all():
+        event.participants.add(profile)
+        event.save()
+
+    return redirect('events_list')

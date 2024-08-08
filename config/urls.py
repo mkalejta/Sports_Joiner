@@ -37,5 +37,6 @@ urlpatterns = [
     path('update_profile/', views.update_profile, name='update_profile'),
     path('events/', views.events_list, name='events_list'),
     path('create_event/', views.create_event, name='create_event'),
-    path('event_details/<int:pk>', views.event_details, name='event_details')
+    path('event_details/<int:pk>', views.event_details, name='event_details'),
+    path('join/<int:event_id>/', views.join_event, name='join_event')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

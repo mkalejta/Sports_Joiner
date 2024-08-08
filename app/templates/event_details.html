@@ -8,7 +8,7 @@
     main > div.container {
         display: flex;
         flex-direction: column;
-        margin: 1rem 0 3rem 0;
+        margin: 1rem 0 6rem 0;
     }
 
     .event {
@@ -137,13 +137,14 @@
             </div>
         </div>
     </div>
+    <h2 style="font-style: italic; text-align: center;">Participants</h2>
     {% for participant in event.participants.all %}
         <div class="participant">
             <div class="left2">
                 <img class="rounded-circle profile-picture" src="{{ participant.profile_picture.url }}">
                 <div><a href="{% url 'user_dashboard' participant.user.id %}">@{{ participant.user.username }}</a></div>
             </div>
-            <p class="right2">
+            <div class="right2">
                 <p>Age: {{ participant.age }}</p>
             </div>
         </div>
