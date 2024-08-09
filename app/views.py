@@ -56,16 +56,20 @@ def update_profile(request):
 
 
 def events_list(request):
-    if request.GET.get('sport_category'):
-        if request.GET.get('sport_category') == 'All':
+    if request.method == 'POST':
+        if request.POST.get('sport_category') == 'All':
             qs = models.Event.objects.all()
+            wybrana_wartosc = 'All'
         else:
-            sport_category_query = request.GET.get('sport_category')
+            wybrana_wartosc = request.POST.get('sport_category')
+            sport_category_query = request.POST.get('sport_category')
             qs = models.Event.objects.filter(facility__sport__name=sport_category_query)
     else:
+        wybrana_wartosc = None
         qs = models.Event.objects.all()
     context = {
-        'queryset': qs
+        'queryset': qs,
+        'wybrana_wartosc': wybrana_wartosc
     }
     return render(request, "events_list.html", context)
 
@@ -107,19 +111,38 @@ def join_event(request, event_id):
 @login_required
 def my_events(request, pk):
     events = models.Event.objects.filter(participants__id__icontains=pk)
-    sport_query = request.GET.get('sport_category')
-    status_query = request.GET.get('user_event_status')
-    if sport_query:
-        if sport_query != 'All':
-            events = events.filter(facility__sport__name=sport_query)
-    if status_query:
-        if status_query != 'All':
+    if request.method == 'POST':
+        sport_query = request.POST.get('sport_category')
+        status_query = request.POST.get('user_event_status')
+        if sport_query == 'All' and status_query == 'all':
+            wybrana_wartosc1 = 'All'
+            wybrana_wartosc2 = 'all'
+        elif sport_query == 'All' and status_query != 'all':
+            wybrana_wartosc1 = 'All'
+            wybrana_wartosc2 = status_query
             if status_query == 'organizer':
                 events = events.filter(organizer__id=pk)
             elif status_query == 'participant':
                 events = events.exclude(organizer__id=pk)
+        elif sport_query != 'All' and status_query == 'all':
+            events = events.filter(facility__sport__name=sport_query)
+            wybrana_wartosc1 = sport_query
+            wybrana_wartosc2 = 'all'
+        else:
+            events = events.filter(facility__sport__name=sport_query)
+            wybrana_wartosc1 = sport_query
+            wybrana_wartosc2 = status_query
+            if status_query == 'organizer':
+                events = events.filter(organizer__id=pk)
+            elif status_query == 'participant':
+                events = events.exclude(organizer__id=pk)
+    else:
+        wybrana_wartosc1 = None
+        wybrana_wartosc2 = None
     context = {
-        'events': events
+        'events': events,
+        'wybrana_wartosc1': wybrana_wartosc1,
+        'wybrana_wartosc2': wybrana_wartosc2
     }
     return render(request, 'my_events.html', context)
 

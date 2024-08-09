@@ -67,20 +67,10 @@
         left: 1rem;
     }
 
-    .user-event-status {
-        position: absolute;
-        right: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
     .sports {
-        position: absolute;
-        left: 1rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 5rem;
     }
 
     p.description {
@@ -104,24 +94,25 @@
 {% block content %}
 <div class="container">
     {% regroup events by date as date_list %}
-    <form class="sports" action="{% url 'my_events' request.user.id %}" method="get">
-        <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
-        <select name="sport_category" id="sports">
-            <option>All</option>
-            <option value="pilka_nozna">pilka_nozna</option>
-            <option value="koszykowka">koszykowka</option>
-            <option value="siatkowka">siatkowka</option>
-        </select>
-        <input class="btn btn-secondary" type="submit" value="Select">
-    </form>
-    <p>{{ sport_category }}</p>
-    <form class="user-event-status" action="{% url 'my_events' request.user.id %}" method="get">
-        <label for="user-event-status" style="font-style: italic; font-weight: bold;">User's event status</label>
-        <select name="user_event_status" id="user-event-status">
-            <option>All</option>
-            <option value="organizer">organizer</option>
-            <option value="participant">participant</option>
-        </select>
+    <form class="sports" action="{% url 'my_events' request.user.id %}" method="post">
+        <div class="sport-category">
+            <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
+            {% csrf_token %}
+            <select name="sport_category" id="sports">
+                <option value="All" {% if wybrana_wartosc1 == 'All' %}selected{% endif %}>All</option>
+                <option value="pilka_nozna" {% if wybrana_wartosc1 == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
+                <option value="koszykowka" {% if wybrana_wartosc1 == 'koszykowka' %}selected{% endif %}>koszykowka</option>
+                <option value="siatkowka" {% if wybrana_wartosc1 == 'siatkowka' %}selected{% endif %}>siatkowka</option>
+            </select>
+        </div>
+        <div class="user-event-status">
+            <label for="user-event-status" style="font-style: italic; font-weight: bold;">User's event status</label>
+            <select name="user_event_status" id="user-event-status">
+                <option value="all" {% if wybrana_wartosc2 == 'all' %}selected{% endif %}>All</option>
+                <option value="organizer" {% if wybrana_wartosc2 == 'organizer' %}selected{% endif %}>organizer</option>
+                <option value="participant" {% if wybrana_wartosc2 == 'participant' %}selected{% endif %}>participant</option>
+            </select>
+        </div>
         <input class="btn btn-primary" type="submit" value="Select">
     </form>
     {% for elem in date_list %}

@@ -101,13 +101,14 @@
 {% block content %}
 <div class="container">
     {% regroup queryset by date as date_list %}
-    <form class="sports" action="{% url 'events_list' %}" method="get">
+    <form class="sports" action="{% url 'events_list' %}" method="post">
         <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
+        {% csrf_token %}
         <select name="sport_category" id="sports">
-            <option>All</option>
-            <option value="pilka_nozna">pilka_nozna</option>
-            <option value="koszykowka">koszykowka</option>
-            <option value="siatkowka">siatkowka</option>
+            <option value="All" {% if wybrana_wartosc == 'All' %}selected{% endif %}>All</option>
+            <option value="pilka_nozna" {% if wybrana_wartosc == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
+            <option value="koszykowka"{% if wybrana_wartosc == 'koszykowka' %}selected{% endif %}>koszykowka</option>
+            <option value="siatkowka"{% if wybrana_wartosc == 'siatkowka' %}selected{% endif %}>siatkowka</option>
         </select>
         <input class="btn btn-secondary" type="submit" value="Select">
     </form>
