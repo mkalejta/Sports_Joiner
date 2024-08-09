@@ -67,9 +67,12 @@
         left: 1rem;
     }
 
-    .create-event {
+    .user-event-status {
         position: absolute;
         right: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .sports {
@@ -100,8 +103,8 @@
 
 {% block content %}
 <div class="container">
-    {% regroup queryset by date as date_list %}
-    <form class="sports" action="{% url 'events_list' %}" method="get">
+    {% regroup events by date as date_list %}
+    <form class="sports" action="{% url 'my_events' request.user.id %}" method="get">
         <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
         <select name="sport_category" id="sports">
             <option>All</option>
@@ -112,7 +115,15 @@
         <input class="btn btn-secondary" type="submit" value="Select">
     </form>
     <p>{{ sport_category }}</p>
-    <a class="create-event btn btn-primary" href="{% url 'create_event' %}">Create Event</a>
+    <form class="user-event-status" action="{% url 'my_events' request.user.id %}" method="get">
+        <label for="user-event-status" style="font-style: italic; font-weight: bold;">User's event status</label>
+        <select name="user_event_status" id="user-event-status">
+            <option>All</option>
+            <option value="organizer">organizer</option>
+            <option value="participant">participant</option>
+        </select>
+        <input class="btn btn-primary" type="submit" value="Select">
+    </form>
     {% for elem in date_list %}
         <h2 style="margin: 1rem 0;">{{ elem.grouper|date:"d/m/Y" }}</h2>
         {% for ele in elem.list %}
@@ -142,6 +153,10 @@
                             <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Join</a>
                         {% else %}
                             <a class="btn disabled btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Joined</a>
+                        {% endif %}
+                        {% if request.user == ele.organizer %}
+                            <a class="btn btn-warning" href="{% url 'edit_event' ele.id %}" style="font-weight: bold; color: white;">Edit</a>
+                            <a class="btn btn-danger" href="{% url 'delete_event' ele.id %}" style="font-weight: bold; color: white;">Delete</a>
                         {% endif %}
                     </div>
                 </div>

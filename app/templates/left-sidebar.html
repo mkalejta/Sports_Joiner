@@ -2,7 +2,7 @@
     <div class="list-group">
         <a href="{% url 'user_dashboard' request.user.id %}" class="list-group-item">Dashboard</a>
         <a href="{% url 'update_profile' %}" class="list-group-item">Update Profile</a>
-        <a href="#" class="list-group-item">My Events</a>
+        <a href="{% url 'my_events' request.user.id %}" class="list-group-item">My Events</a>
         <a href="{% url 'password_change' %}" class="list-group-item">Change Password</a>
     </div>
 {% endif %}

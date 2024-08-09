@@ -46,7 +46,7 @@ def update_profile(request):
             profile_form.save()
 
             messages.success(request, "Your profile was successfully updated")
-            return redirect('user_dashboard')
+            return redirect('user_dashboard', pk=request.user.id)
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -103,3 +103,50 @@ def join_event(request, event_id):
         event.save()
 
     return redirect('events_list')
+
+@login_required
+def my_events(request, pk):
+    events = models.Event.objects.filter(participants__id__icontains=pk)
+    sport_query = request.GET.get('sport_category')
+    status_query = request.GET.get('user_event_status')
+    if sport_query:
+        if sport_query != 'All':
+            events = events.filter(facility__sport__name=sport_query)
+    if status_query:
+        if status_query != 'All':
+            if status_query == 'organizer':
+                events = events.filter(organizer__id=pk)
+            elif status_query == 'participant':
+                events = events.exclude(organizer__id=pk)
+    context = {
+        'events': events
+    }
+    return render(request, 'my_events.html', context)
+
+@login_required
+def edit_event(request, event_id):
+    event = models.Event.objects.get(id=event_id)
+    if request.user.username == event.organizer.username:
+        edit_form = forms.CreateEventForm(request.POST or None, instance=event)
+        if request.method == 'POST':
+            if edit_form.is_valid():
+                new_event = edit_form.save(commit=False)
+                new_event.organizer = request.user
+                new_event.save()
+                return redirect('my_events', pk=request.user.id)
+        context = {
+            'event': event,
+            'form': edit_form
+        }
+        return render(request, 'edit_event.html', context)
+    else:
+        return redirect('home')
+
+@login_required
+def delete_event(request, event_id):
+    event = models.Event.objects.get(id=event_id)
+    if request.user.username == event.organizer.username:
+        event.delete()
+        return redirect('my_events', pk=request.user.id)
+    else:
+        return redirect('home')

@@ -129,6 +129,8 @@
                     <p>{{ event.date|date:"d.m.Y" }}</p>
                     <span>Event start: </span>
                     <p>{{ event.time }}</p>
+                    <span>Estimated time: </span>
+                    <p>{{ ele.estimated_time }} minutes</p>
                 </div>
             </div>
             <div class="right">
@@ -145,7 +147,9 @@
                 <div><a href="{% url 'user_dashboard' participant.user.id %}">@{{ participant.user.username }}</a></div>
             </div>
             <div class="right2">
-                <p>Age: {{ participant.age }}</p>
+                {% if participant.age is not None %}
+                    <p>Age: {{ participant.age }}</p>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
