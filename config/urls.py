@@ -41,5 +41,6 @@ urlpatterns = [
     path('join/<int:event_id>/', views.join_event, name='join_event'),
     path('my_events/<int:pk>', views.my_events, name='my_events'),
     path('edit_event/<int:event_id>', views.edit_event, name='edit_event'),
-    path('delete_event/<int:event_id>', views.delete_event, name='delete_event')
+    path('delete_event/<int:event_id>', views.delete_event, name='delete_event'),
+    path('leave_event/<int:event_id>', views.leave_event, name='leave_event')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

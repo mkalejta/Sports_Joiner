@@ -46,7 +46,7 @@
 
     .event .left {
         margin-left: 4rem;
-        height: 350px;
+        height: 400px;
         font-size: 1.25rem;
         display: flex;
         flex-direction: column;
@@ -56,13 +56,16 @@
     .left span {
         font-style: italic;
         font-weight: bold;
-        color: orange;
         font-size: 1.5rem;
     }
 
     .left p {
         position: relative;
         left: 1rem;
+    }
+
+    .content span, h3 {
+        color: #fff200;
     }
 
     .create-event {
@@ -134,7 +137,7 @@
                 </div>
             </div>
             <div class="right">
-                <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
+                <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Description</h3>
                 <p class="description">{{ event.description }}</p>
             </div>
         </div>

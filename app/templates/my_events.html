@@ -140,10 +140,10 @@
                         <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
                         <p class="description">{{ ele.description }}</p>
                         <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Show details</a>
-                        {% if request.user.profile not in ele.participants.all %}
+                        {% if request.user.profile not in ele.participants.all and ele.participants.all.count < ele.max_participants %}
                             <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Join</a>
-                        {% else %}
-                            <a class="btn disabled btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Joined</a>
+                        {% elif request.user.profile in ele.participants.all and ele.participants.all.count < ele.max_participants and request.user != ele.organizer %}
+                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Leave</a>
                         {% endif %}
                         {% if request.user == ele.organizer %}
                             <a class="btn btn-warning" href="{% url 'edit_event' ele.id %}" style="font-weight: bold; color: white;">Edit</a>

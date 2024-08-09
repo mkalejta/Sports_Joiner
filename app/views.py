@@ -54,7 +54,7 @@ def update_profile(request):
         profile_form = forms.ProfilePicForm(instance=request.user.profile)
     return render(request, 'update_profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
-
+@login_required
 def events_list(request):
     if request.method == 'POST':
         if request.POST.get('sport_category') == 'All':
@@ -107,6 +107,17 @@ def join_event(request, event_id):
         event.save()
 
     return redirect('events_list')
+
+@login_required
+def leave_event(request, event_id):
+    event = models.Event.objects.get(id=event_id)
+    profile = request.user.profile
+
+    if profile in event.participants.all():
+        event.participants.remove(profile)
+        event.save()
+
+    return redirect(request.META.get("HTTP_REFERER"))
 
 @login_required
 def my_events(request, pk):

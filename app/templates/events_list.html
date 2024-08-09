@@ -58,11 +58,32 @@
     .left span {
         font-style: italic;
         font-weight: bold;
-        color: orange;
         font-size: 1.5rem;
     }
 
     .left p {
+        position: relative;
+        left: 1rem;
+    }
+
+    .content span, h3 {
+        color: #fff200;
+    }
+
+    .right span {
+        font-style: italic;
+        font-weight: bold;
+        color: #fff200;
+        font-size: 1.5rem;
+    }
+
+    .right > div.participants {
+        position: absolute;
+        top: 1rem;
+        right: 2rem;
+    }
+
+    .right p.participants {
         position: relative;
         left: 1rem;
     }
@@ -136,13 +157,19 @@
                         </div>
                     </div>
                     <div class="right">
-                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
+                        <div class="participants">
+                            <span>Participants: </span>
+                            <p class="participants">{{ ele.participants.all.count }}/{{ ele.max_participants }}</p>
+                        </div>
+                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Description</h3>
                         <p class="description">{{ ele.description }}</p>
                         <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Show details</a>
-                        {% if request.user.profile not in ele.participants.all %}
+                        {% if request.user.profile not in ele.participants.all and ele.participants.all.count < ele.max_participants %}
                             <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Join</a>
-                        {% else %}
-                            <a class="btn disabled btn-primary" href="#" style="font-weight: bold; text-transform: uppercase;">Joined</a>
+                        {% elif request.user.profile in ele.participants.all and ele.participants.all.count < ele.max_participants and request.user != ele.organizer %}
+                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Leave</a>
+                        {% elif ele.participants.all == ele.max_participants %}
+                            <a class="btn disabled btn-primary">Participant limit has been reached</a>
                         {% endif %}
                     </div>
                 </div>
