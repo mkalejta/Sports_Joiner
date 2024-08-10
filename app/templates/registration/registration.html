@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Rejestracja
+{% endblock %}
+
+
+{% block style %}
+    main {
+        float: none;
+    }
+
+    div {
+        margin: 0 auto;
+    }
+
+    h1 {
+        text-align: center;
+        font-style: italic;
+    }
+
+    form label {
+        font-weight: bold;
+        font-style: italic;
+    }
+
+    main > div {
+        margin-bottom: 5rem;
+    }
+{% endblock %}
+
+
+{% block content %}
+<div class="col-md-6 offset-md-3">
+    <h1>Rejestracja</h1>
+    <br/>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary mt-3">Zarejestruj się</button>
+    </form>
+</div>
+{% endblock %}
