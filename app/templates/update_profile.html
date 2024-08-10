@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Update Profile{% endblock %}
+{% block title %}Edycja Profilu{% endblock %}
 
 {% block style %}
     table th {
@@ -16,14 +16,14 @@
                 {% include 'left-sidebar.html' %}
             </div>
             <div class="col-9">
-                <h3 class="mb-4 border-bottom pb-1" style="font-style: italic;">Update Profile</h3>
+                <h3 class="mb-4 border-bottom pb-1" style="font-style: italic;">Edycja profilu</h3>
                 <form method="post" action="" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{profile_form.as_p}}
                     <br/>
                     {{user_form.as_p}}
                     <br/>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-primary">Edytuj</button>
                 </form>
             </div>
         </div>

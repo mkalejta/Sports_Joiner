@@ -117,32 +117,32 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-4 border-bottom pb-1" style="font-style: italic; text-align: center;">Event Details</h2>
+    <h2 class="mb-4 border-bottom pb-1" style="font-style: italic; text-align: center;">Szczegóły wydarzenia</h2>
     <div class="event" style="background-image: url({% static 'images/' %}{{ event.facility.sport.name }}.jpg);">
         <div class="content">
             <div class="left">
                 <div class="info-1">
-                    <span>Organizer: </span>
+                    <span>Organizator: </span>
                     <p>{{ event.organizer }}</p>
-                    <span>Facility address: </span>
+                    <span>Adres spotkania: </span>
                     <p>{{ event.facility.address }}</p>
                 </div>
                 <div class="info-2">
-                    <span>Date: </span>
+                    <span>Data: </span>
                     <p>{{ event.date|date:"d.m.Y" }}</p>
-                    <span>Event start: </span>
+                    <span>Czas rozpoczęcia: </span>
                     <p>{{ event.time }}</p>
-                    <span>Estimated time: </span>
-                    <p>{{ event.estimated_time }} minutes</p>
+                    <span>Przewidywany czas wydarzenia: </span>
+                    <p>{{ event.estimated_time }} minut</p>
                 </div>
             </div>
             <div class="right">
-                <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Description</h3>
+                <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Opis</h3>
                 <p class="description">{{ event.description }}</p>
             </div>
         </div>
     </div>
-    <h2 style="font-style: italic; text-align: center;">Participants</h2>
+    <h2 style="font-style: italic; text-align: center;">Uczestnicy</h2>
     {% for participant in event.participants.all %}
         <div class="participant">
             <div class="left2">
@@ -151,7 +151,7 @@
             </div>
             <div class="right2">
                 {% if participant.age is not None %}
-                    <p>Age: {{ participant.age }}</p>
+                    <p>Wiek: {{ participant.age }}</p>
                 {% endif %}
             </div>
         </div>

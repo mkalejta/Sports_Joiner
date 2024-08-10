@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load my_filters %}
-{% block title %}Events{% endblock %}
+{% block title %}Wydarzenia{% endblock %}
 
 
 {% block style %}
@@ -80,7 +80,7 @@
     .right > div.participants {
         position: absolute;
         top: 1rem;
-        right: 2rem;
+        left: calc(50% + 1rem);
     }
 
     .right p.participants {
@@ -123,18 +123,18 @@
 <div class="container">
     {% regroup queryset by date as date_list %}
     <form class="sports" action="{% url 'events_list' %}" method="post">
-        <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
+        <label for="sports" style="font-style: italic; font-weight: bold;">Kategorie sportowe</label>
         {% csrf_token %}
         <select name="sport_category" id="sports">
-            <option value="All" {% if wybrana_wartosc == 'All' %}selected{% endif %}>All</option>
+            <option value="All" {% if wybrana_wartosc == 'All' %}selected{% endif %}>Wszystkie</option>
             <option value="pilka_nozna" {% if wybrana_wartosc == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
             <option value="koszykowka"{% if wybrana_wartosc == 'koszykowka' %}selected{% endif %}>koszykowka</option>
             <option value="siatkowka"{% if wybrana_wartosc == 'siatkowka' %}selected{% endif %}>siatkowka</option>
         </select>
-        <input class="btn btn-secondary" type="submit" value="Select">
+        <input class="btn btn-primary" type="submit" value="Filtruj">
     </form>
     <p>{{ sport_category }}</p>
-    <a class="create-event btn btn-primary" href="{% url 'create_event' %}">Create Event</a>
+    <a class="create-event btn btn-primary" href="{% url 'create_event' %}">Stwórz wydarzenie</a>
     {% for elem in date_list %}
         <h2 style="margin: 1rem 0;">{{ elem.grouper|date:"d/m/Y" }}</h2>
         {% for ele in elem.list %}
@@ -142,34 +142,38 @@
                 <div class="content">
                     <div class="left">
                         <div class="info-1">
-                            <span>Organizer: </span>
+                            <span>Organizator: </span>
                             <p>{{ ele.organizer }}</p>
-                            <span>Facility address: </span>
+                            <span>Adres spotkania: </span>
                             <p>{{ ele.facility.address }}</p>
                         </div>
                         <div class="info-2">
-                            <span>Date: </span>
+                            <span>Data: </span>
                             <p>{{ ele.date|date:"d.m.Y" }}</p>
-                            <span>Event start: </span>
+                            <span>Czas rozpoczęcia: </span>
                             <p>{{ ele.time }}</p>
-                            <span>Estimated time: </span>
+                            <span>Przewidywany czas trwania: </span>
                             <p>{{ ele.estimated_time }} minutes</p>
                         </div>
                     </div>
                     <div class="right">
                         <div class="participants">
-                            <span>Participants: </span>
+                            <span>Uczestnicy: </span>
                             <p class="participants">{{ ele.participants.all.count }}/{{ ele.max_participants }}</p>
                         </div>
-                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Description</h3>
+                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Opis</h3>
                         <p class="description">{{ ele.description }}</p>
-                        <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Show details</a>
+                        <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Szczegóły wydarzenia</a>
                         {% if request.user.profile not in ele.participants.all and ele.participants.all.count < ele.max_participants %}
-                            <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Join</a>
+                            <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Dołącz</a>
                         {% elif request.user.profile in ele.participants.all and ele.participants.all.count < ele.max_participants and request.user != ele.organizer %}
-                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Leave</a>
+                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Opuść</a>
                         {% elif ele.participants.all == ele.max_participants %}
                             <a class="btn disabled btn-primary">Participant limit has been reached</a>
+                        {% endif %}
+                        {% if request.user == ele.organizer %}
+                            <a class="btn btn-warning" href="{% url 'edit_event' ele.id %}" style="font-weight: bold; color: white;">Edytuj</a>
+                            <a class="btn btn-danger" href="{% url 'delete_event' ele.id %}" style="font-weight: bold; color: white;">Usuń</a>
                         {% endif %}
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Logowanie{% endblock %}
 
 {% block style %}
     br + div {
@@ -36,11 +36,11 @@
 {% block content %}
 <br>
 <div>
-    <h2>Log In</h2>
+    <h2>Logowanie</h2>
     <form method="post">
     {% csrf_token %}
     {{ form }}
-        <button type="submit" class="btn btn-primary">Log In</button>
+        <button type="submit" class="btn btn-primary">Zaloguj się</button>
     </form>
 </div>
 {% endblock %}

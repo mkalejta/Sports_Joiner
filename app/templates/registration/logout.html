@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Logout{% endblock %}
+{% block title %}Wylogowano{% endblock %}
 
 {% block style %}
 {% endblock %}
@@ -9,7 +9,7 @@
 {% block content %}
 <br>
 <div>
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
+    <p>Nie jesteś zalogowany</p>
+    <a href="{% url 'login' %}">Zaloguj się</a>
 </div>
 {% endblock %}

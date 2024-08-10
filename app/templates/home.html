@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load my_filters %}
-{% block title %}Home Page{% endblock %}
+{% block title %}Strona Główna{% endblock %}
 
 
 {% block style %}
@@ -70,10 +70,10 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="welcome">Welcome on Sports Joiner!</h2>
+        <h2 class="welcome">Witaj w Sports Joiner!</h2>
         <div class="content">
             <div class="block">
-                <h3 class="title">About App</h3>
+                <h3 class="title">O Projekcie</h3>
                 <p>W dzisiejszym świecie pełnym cyfryzacji zaczynają zanikać podstawowe wartości relacji międzyludzkich.
                     Większość coraz rzadziej się integruje, przez co pozostają w samotności. Odnotować można również
                     niski współczynnik zainteresowania sportem wśród ludzi. Mowa oczywiście o aktywnym udziale a nie biernym
@@ -81,7 +81,7 @@
                     Ma ona na celu zadbać o ludzkie zdrowie, zaowocować nowymi znajomościami a nawet wykształcić przyszłe gwiazdy sportowe.</p>
             </div>
             <div class="block">
-                <h3 class="title">Statistics</h3>
+                <h3 class="title">Statystyki</h3>
                 <p>Aplikcja działa od bardzo niedawna, za to niezwykle dynamicznie się rozwija. Od wdrożenia jej w życie dołączyło już
                     {% total_users %} użytkowników! Z dnia na dzień widać nadzieję na powodzenie misji jakie ma do spełnienia ta aplikacja.</p>
                 <h3 class="todays-statistics">Dane z dnia: {% now 'd/m/Y' %}</h3>
@@ -89,7 +89,7 @@
                 <span>Ilość nowych użytkowników: {% todays_users %}</span>
             </div>
             <div class="block">
-                <h3 class="title">What's new comming?</h3>
+                <h3 class="title">Co nowego nadchodzi?</h3>
                 <p style="margin-bottom: 2rem;">Plan rozwoju aplikacji sięga najbliższych kilku lat aczkolwiek już teraz mogę się z wami podzielić następnymi najbliższymi
                     zmianami!</p>
                 <ul class="list-group list-group-flush">
@@ -99,10 +99,10 @@
                 </ul>
             </div>
             <div class="block">
-                <h3 class="title">Join us</h3>
+                <h3 class="title">Dołącz już teraz</h3>
                 <p>Nie zwlekaj i dołącz do Sports Joiner - jedynej i najlepszej aplikacji łączącej ludzi ze sportem!</p>
                 <div class="button">
-                    <a class="btn btn-primary" href="{% url 'sign_up' %}">Join Now</a>
+                    <a class="btn btn-primary" href="{% url 'sign_up' %}">Dołącz</a>
                 </div>
                 <br>
                 <br>
@@ -110,7 +110,7 @@
                 <br>
                 <p>Jeśli posiadasz już konto - zaloguj się. Śmiało!</p>
                 <div class="button">
-                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Zaloguj się</a>
                 </div>
             </div>
         </div>

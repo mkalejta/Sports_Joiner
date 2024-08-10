@@ -88,22 +88,22 @@
              </a>
              <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Strona Główna</a>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'events_list' %}">Events</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'events_list' %}">Wydarzenia</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Profile
+                        Profil
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                     {% if not request.user.is_authenticated %}
-                        <li><a class="dropdown-item" href="{% url 'sign_up' %}">Register</a></li>
-                        <li><a class="dropdown-item nav-link" href="{% url 'login' %}">Login</a></li>
+                        <li><a class="dropdown-item" href="{% url 'sign_up' %}">Rejestracja</a></li>
+                        <li><a class="dropdown-item nav-link" href="{% url 'login' %}">Logowanie</a></li>
                     {% else %}
-                        <li><a class="dropdown-item" href="{% url 'user_dashboard' request.user.id %}">Dashboard</a></li>
-                        <li><a class="dropdown-item nav-link" href="{% url 'logout' %}">Log Out</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_dashboard' request.user.id %}">Panel Główny</a></li>
+                        <li><a class="dropdown-item nav-link" href="{% url 'logout' %}">Wyloguj</a></li>
                     {% endif %}
                     </ul>
                 </li>

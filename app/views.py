@@ -181,6 +181,6 @@ def delete_event(request, event_id):
     event = models.Event.objects.get(id=event_id)
     if request.user.username == event.organizer.username:
         event.delete()
-        return redirect('my_events', pk=request.user.id)
+        return redirect(request.META.get("HTTP_REFERER"))
     else:
         return redirect('home')

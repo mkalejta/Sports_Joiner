@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Panel Główny{% endblock %}
 
 {% block style %}
     div.main {
@@ -31,15 +31,15 @@
                     {% include 'left-sidebar.html' %}
                 </div>
                 <div class="col-9">
-                    <h3 class="mb-4 border-bottom pb-1" style="font-style: italic;">Dashboard</h3>
+                    <h3 class="mb-4 border-bottom pb-1" style="font-style: italic;">Panel Główny</h3>
                     <div class="content">
                         <img class="rounded-circle profile-picture" src="{{ user.profile.profile_picture.url }}">
                         <div class="info">
-                            <p><span>Username</span>: {{ user.username }}</p>
-                            <p><span>First Name</span>: {{ user.first_name }}</p>
-                            <p><span>Last Name</span>: {{ user.last_name }}</p>
-                            <p><span>Birth Date</span>: {{ user.profile.birth_date }}</p>
-                            <p><span>Email</span>: {{ user.email }}</p>
+                            <p><span>Nazwa użytkownika</span>: {{ user.username }}</p>
+                            <p><span>Imię</span>: {{ user.first_name }}</p>
+                            <p><span>Nazwisko</span>: {{ user.last_name }}</p>
+                            <p><span>Data urodzenia</span>: {{ user.profile.birth_date|date:'Y-m-d' }}</p>
+                            <p><span>E-mail</span>: {{ user.email }}</p>
                         </div>
                     </div>
                 </div>

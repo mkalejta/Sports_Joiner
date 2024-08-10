@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load my_filters %}
-{% block title %}My Events{% endblock %}
+{% block title %}Moje wydarzenia{% endblock %}
 
 
 {% block style %}
@@ -58,7 +58,6 @@
     .left span {
         font-style: italic;
         font-weight: bold;
-        color: orange;
         font-size: 1.5rem;
     }
 
@@ -66,6 +65,28 @@
         position: relative;
         left: 1rem;
     }
+
+    .content span, h3 {
+        color: #fff200;
+    }
+
+    .right span {
+        font-style: italic;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .right > div.participants {
+        position: absolute;
+        top: 1rem;
+        left: calc(50% + 1rem);
+    }
+
+    .right p.participants {
+        position: relative;
+        left: 1rem;
+    }
+
 
     .sports {
         display: flex;
@@ -93,27 +114,29 @@
 
 {% block content %}
 <div class="container">
+    <h2>Moje wydarzenia</h2>
+    <br>
     {% regroup events by date as date_list %}
     <form class="sports" action="{% url 'my_events' request.user.id %}" method="post">
         <div class="sport-category">
-            <label for="sports" style="font-style: italic; font-weight: bold;">Sport Categories</label>
+            <label for="sports" style="font-style: italic; font-weight: bold;">Kategorie sportowe</label>
             {% csrf_token %}
             <select name="sport_category" id="sports">
-                <option value="All" {% if wybrana_wartosc1 == 'All' %}selected{% endif %}>All</option>
+                <option value="All" {% if wybrana_wartosc1 == 'All' %}selected{% endif %}>Wszystkie</option>
                 <option value="pilka_nozna" {% if wybrana_wartosc1 == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
                 <option value="koszykowka" {% if wybrana_wartosc1 == 'koszykowka' %}selected{% endif %}>koszykowka</option>
                 <option value="siatkowka" {% if wybrana_wartosc1 == 'siatkowka' %}selected{% endif %}>siatkowka</option>
             </select>
         </div>
         <div class="user-event-status">
-            <label for="user-event-status" style="font-style: italic; font-weight: bold;">User's event status</label>
+            <label for="user-event-status" style="font-style: italic; font-weight: bold;">Status uczestnictwa</label>
             <select name="user_event_status" id="user-event-status">
-                <option value="all" {% if wybrana_wartosc2 == 'all' %}selected{% endif %}>All</option>
-                <option value="organizer" {% if wybrana_wartosc2 == 'organizer' %}selected{% endif %}>organizer</option>
-                <option value="participant" {% if wybrana_wartosc2 == 'participant' %}selected{% endif %}>participant</option>
+                <option value="all" {% if wybrana_wartosc2 == 'all' %}selected{% endif %}>Wszystkie</option>
+                <option value="organizer" {% if wybrana_wartosc2 == 'organizer' %}selected{% endif %}>organizator</option>
+                <option value="participant" {% if wybrana_wartosc2 == 'participant' %}selected{% endif %}>uczestnik</option>
             </select>
         </div>
-        <input class="btn btn-primary" type="submit" value="Select">
+        <input class="btn btn-primary" type="submit" value="Filtruj">
     </form>
     {% for elem in date_list %}
         <h2 style="margin: 1rem 0;">{{ elem.grouper|date:"d/m/Y" }}</h2>
@@ -122,32 +145,36 @@
                 <div class="content">
                     <div class="left">
                         <div class="info-1">
-                            <span>Organizer: </span>
+                            <span>Organizator: </span>
                             <p>{{ ele.organizer }}</p>
-                            <span>Facility address: </span>
+                            <span>Adres spotkania: </span>
                             <p>{{ ele.facility.address }}</p>
                         </div>
                         <div class="info-2">
-                            <span>Date: </span>
+                            <span>Data: </span>
                             <p>{{ ele.date|date:"d.m.Y" }}</p>
-                            <span>Event start: </span>
+                            <span>Czas rozpoczęcia: </span>
                             <p>{{ ele.time }}</p>
-                            <span>Estimated time: </span>
+                            <span>Przewidywany czas trwania: </span>
                             <p>{{ ele.estimated_time }} minutes</p>
                         </div>
                     </div>
                     <div class="right">
-                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center; color: orange;">Description</h3>
+                        <div class="participants">
+                            <span>Uczestnicy: </span>
+                            <p class="participants">{{ ele.participants.all.count }}/{{ ele.max_participants }}</p>
+                        </div>
+                        <h3 style="font-weight: bold; font-style: italic; text-transform: uppercase; text-align: center;">Opis</h3>
                         <p class="description">{{ ele.description }}</p>
-                        <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Show details</a>
+                        <a class="btn btn-secondary" href="{% url 'event_details' ele.id %}" style="font-weight: bold;">Szczegóły wydarzenia</a>
                         {% if request.user.profile not in ele.participants.all and ele.participants.all.count < ele.max_participants %}
-                            <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Join</a>
+                            <a class="btn btn-primary" href="{% url 'join_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Dołącz</a>
                         {% elif request.user.profile in ele.participants.all and ele.participants.all.count < ele.max_participants and request.user != ele.organizer %}
-                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Leave</a>
+                            <a class="btn btn-outline-primary" href="{% url 'leave_event' ele.id %}" style="font-weight: bold; text-transform: uppercase;">Opuść</a>
                         {% endif %}
                         {% if request.user == ele.organizer %}
-                            <a class="btn btn-warning" href="{% url 'edit_event' ele.id %}" style="font-weight: bold; color: white;">Edit</a>
-                            <a class="btn btn-danger" href="{% url 'delete_event' ele.id %}" style="font-weight: bold; color: white;">Delete</a>
+                            <a class="btn btn-warning" href="{% url 'edit_event' ele.id %}" style="font-weight: bold; color: white;">Edytuj</a>
+                            <a class="btn btn-danger" href="{% url 'delete_event' ele.id %}" style="font-weight: bold; color: white;">Usuń</a>
                         {% endif %}
                     </div>
                 </div>
