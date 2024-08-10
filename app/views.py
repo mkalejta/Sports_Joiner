@@ -165,7 +165,7 @@ def my_events(request, pk):
 @login_required
 def edit_event(request, event_id):
     event = models.Event.objects.get(id=event_id)
-    if request.user.username == event.organizer.username:
+    if request.user == event.organizer:
         edit_form = forms.CreateEventForm(request.POST or None, instance=event)
         if request.method == 'POST':
             if edit_form.is_valid():
@@ -183,9 +183,10 @@ def edit_event(request, event_id):
 
 @login_required
 def delete_event(request, event_id):
-    event = models.Event.objects.get(id=event_id)
-    if request.user.username == event.organizer.username:
-        event.delete()
-        return redirect(request.META.get("HTTP_REFERER"))
-    else:
-        return redirect('home')
+    if request.method == 'POST':
+        event = models.Event.objects.get(id=event_id)
+        if request.user == event.organizer:
+            event.delete()
+            return redirect(request.META.get("HTTP_REFERER"))
+        else:
+            return redirect('home')
