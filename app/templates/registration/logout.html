@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Wylogowano{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+
+{% block content %}
+<br>
+<div>
+    <p>Nie jesteś zalogowany</p>
+    <a href="{% url 'login' %}">Zaloguj się</a>
+</div>
+{% endblock %}
