@@ -1,11 +1,20 @@
 import django.forms as f
 from app import models
-from django.contrib.auth.forms import User, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import User, UserCreationForm, AuthenticationForm, UsernameField
 
 def CapitalizeValidation(c):
     if c[0].islower():
         raise f.ValidationError(f"{c} musi się zaczynać wielką literą!")
 
+class CustomAuthenticationForm(AuthenticationForm):
+    username = UsernameField(
+        label='Nazwa użytkownika',
+        widget=f.TextInput(attrs={'autofocus': True})
+    )
+    password = f.CharField(
+        label='Hasło',
+        widget=f.PasswordInput
+    )
 
 class SignUpForm(UserCreationForm):
     def __init__(self, *args, **kwargs):

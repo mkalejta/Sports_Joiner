@@ -5,6 +5,8 @@ from config import forms
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.messages.views import messages
 from app import models
+from django.contrib.auth.views import LoginView
+from config.forms import CustomAuthenticationForm
 
 def SignUpView(request):
     form = forms.SignUpForm()
@@ -21,6 +23,9 @@ def SignUpView(request):
             return redirect('home')
 
     return render(request, "registration/registration.html", {'form': form})
+
+class CustomLoginView(LoginView):
+    authentication_form = CustomAuthenticationForm
 
 @login_required
 def user_dashboard(request, pk):
