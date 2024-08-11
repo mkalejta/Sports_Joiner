@@ -116,7 +116,6 @@
 <div class="container">
     <h2>Moje wydarzenia</h2>
     <br>
-    {% regroup events by date as date_list %}
     <form class="sports" action="{% url 'my_events' request.user.id %}" method="post">
         <div class="sport-category">
             <label for="sports" style="font-style: italic; font-weight: bold;">Kategorie sportowe</label>
@@ -138,9 +137,10 @@
         </div>
         <input class="btn btn-primary" type="submit" value="Filtruj">
     </form>
+    {% regroup events|dictsort:'date' by date as date_list %}
     {% for elem in date_list %}
         <h2 style="margin: 1rem 0;">{{ elem.grouper|date:"d/m/Y" }}</h2>
-        {% for ele in elem.list %}
+        {% for ele in elem.list|dictsort:"time" %}
             <div class="event" style="background-image: url({% static 'images/' %}{{ ele.facility.sport.name }}.jpg);">
                 <div class="content">
                     <div class="left">

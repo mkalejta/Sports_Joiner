@@ -1,12 +1,11 @@
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from config import forms
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render
 from django.contrib.messages.views import messages
-from app import models
+from app import models, forms
 from django.contrib.auth.views import LoginView
-from config.forms import CustomAuthenticationForm
+from app.forms import CustomAuthenticationForm
 
 def SignUpView(request):
     form = forms.SignUpForm()
@@ -183,10 +182,9 @@ def edit_event(request, event_id):
 
 @login_required
 def delete_event(request, event_id):
-    if request.method == 'POST':
-        event = models.Event.objects.get(id=event_id)
-        if request.user == event.organizer:
-            event.delete()
-            return redirect(request.META.get("HTTP_REFERER"))
-        else:
-            return redirect('home')
+    event = models.Event.objects.get(id=event_id)
+    if request.user == event.organizer:
+        event.delete()
+        return redirect(request.META.get("HTTP_REFERER"))
+    else:
+        return redirect('home')

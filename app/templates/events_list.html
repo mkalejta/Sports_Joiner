@@ -121,7 +121,6 @@
 
 {% block content %}
 <div class="container">
-    {% regroup queryset by date as date_list %}
     <form class="sports" action="{% url 'events_list' %}" method="post">
         <label for="sports" style="font-style: italic; font-weight: bold;">Kategorie sportowe</label>
         {% csrf_token %}
@@ -133,11 +132,11 @@
         </select>
         <input class="btn btn-primary" type="submit" value="Filtruj">
     </form>
-    <p>{{ sport_category }}</p>
     <a class="create-event btn btn-primary" href="{% url 'create_event' %}">Stwórz wydarzenie</a>
+    {% regroup queryset|dictsort:'date' by date as date_list %}
     {% for elem in date_list %}
         <h2 style="margin: 1rem 0;">{{ elem.grouper|date:"d/m/Y" }}</h2>
-        {% for ele in elem.list %}
+        {% for ele in elem.list|dictsort:"time" %}
             <div class="event" style="background-image: url({% static 'images/' %}{{ ele.facility.sport.name }}.jpg);">
                 <div class="content">
                     <div class="left">
