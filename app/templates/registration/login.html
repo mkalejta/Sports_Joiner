@@ -2,36 +2,11 @@
 
 {% block title %}Logowanie{% endblock %}
 
-{% block style %}
-    br + div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
 
-    div > form {
-        width: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    form > button {
-        margin-top: 0.5rem;
-    }
-
-    form label {
-        font-style: italic;
-        font-weight: bold;
-    }
-
-    h2 {
-        font-style: italic;
-    }
-
+{% block head %}
+    <link rel="stylesheet" href="/static/login.css">
 {% endblock %}
+
 
 {% block content %}
 <br>

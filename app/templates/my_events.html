@@ -4,111 +4,8 @@
 {% block title %}Moje wydarzenia{% endblock %}
 
 
-{% block style %}
-    main > div.container {
-        display: flex;
-        flex-direction: column;
-        margin: 1rem 0 5rem 0;
-    }
-
-    .event {
-        position: relative;
-        width: 100%;
-        height: 400px;
-        padding: 2rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        margin-bottom: 2rem;
-    }
-
-    .event::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .event .content {
-        width: 100%;
-        position: relative;
-        z-index: 1;
-        color: white;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .event .left {
-        margin-left: 4rem;
-        color: white;
-        height: 400px;
-        font-size: 1.25rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .left span {
-        font-style: italic;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-
-    .left p {
-        position: relative;
-        left: 1rem;
-    }
-
-    .content span, h3 {
-        color: #fff200;
-    }
-
-    .right span {
-        font-style: italic;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-
-    .right > div.participants {
-        position: absolute;
-        top: 1rem;
-        left: calc(50% + 1rem);
-    }
-
-    .right p.participants {
-        position: relative;
-        left: 1rem;
-    }
-
-
-    .sports {
-        display: flex;
-        align-items: center;
-        gap: 5rem;
-    }
-
-    p.description {
-        width: 30ch;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-size: 1.25rem;
-    }
-
-    .right {
-        width: 300px;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        margin-right: 5rem;
-    }
+{% block head %}
+    <link rel="stylesheet" href="/static/my_events.css">
 {% endblock %}
 
 
@@ -121,18 +18,18 @@
             <label for="sports" style="font-style: italic; font-weight: bold;">Kategorie sportowe</label>
             {% csrf_token %}
             <select name="sport_category" id="sports">
-                <option value="All" {% if wybrana_wartosc1 == 'All' %}selected{% endif %}>Wszystkie</option>
-                <option value="pilka_nozna" {% if wybrana_wartosc1 == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
-                <option value="koszykowka" {% if wybrana_wartosc1 == 'koszykowka' %}selected{% endif %}>koszykowka</option>
-                <option value="siatkowka" {% if wybrana_wartosc1 == 'siatkowka' %}selected{% endif %}>siatkowka</option>
+                <option value="All" {% if sport == 'All' %}selected{% endif %}>Wszystkie</option>
+                <option value="pilka_nozna" {% if sport == 'pilka_nozna' %}selected{% endif %}>pilka_nozna</option>
+                <option value="koszykowka" {% if sport == 'koszykowka' %}selected{% endif %}>koszykowka</option>
+                <option value="siatkowka" {% if sport == 'siatkowka' %}selected{% endif %}>siatkowka</option>
             </select>
         </div>
         <div class="user-event-status">
             <label for="user-event-status" style="font-style: italic; font-weight: bold;">Status uczestnictwa</label>
             <select name="user_event_status" id="user-event-status">
-                <option value="all" {% if wybrana_wartosc2 == 'all' %}selected{% endif %}>Wszystkie</option>
-                <option value="organizer" {% if wybrana_wartosc2 == 'organizer' %}selected{% endif %}>organizator</option>
-                <option value="participant" {% if wybrana_wartosc2 == 'participant' %}selected{% endif %}>uczestnik</option>
+                <option value="all" {% if status == 'all' %}selected{% endif %}>Wszystkie</option>
+                <option value="organizer" {% if status == 'organizer' %}selected{% endif %}>organizator</option>
+                <option value="participant" {% if status == 'participant' %}selected{% endif %}>uczestnik</option>
             </select>
         </div>
         <input class="btn btn-primary" type="submit" value="Filtruj">

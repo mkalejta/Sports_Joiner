@@ -1,0 +1,107 @@
+main > div.container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0 6rem 0;
+}
+
+.event {
+    position: relative;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 2rem;
+}
+
+.event::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.event .content {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.event .left {
+    margin-left: 4rem;
+    height: 400px;
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.left span {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.left p {
+    position: relative;
+    left: 1rem;
+}
+
+.content span, h3 {
+    color: #fff200;
+}
+
+.create-event {
+    position: absolute;
+    right: 1rem;
+}
+
+.sports {
+    position: absolute;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.right {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: flex-start;
+}
+
+img.profile-picture {
+    width: 80px;
+    height: 80px;
+}
+
+.participant {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left2, .right2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.right2 {
+    gap: 0.5rem;
+}

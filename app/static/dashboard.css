@@ -1,0 +1,18 @@
+div.main {
+    width: 100%;
+}
+
+img.profile-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.content {
+    display: flex;
+    gap: 4rem;
+}
+
+p > span {
+    font-weight: bold;
+    font-style: italic;
+}

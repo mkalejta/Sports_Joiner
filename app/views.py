@@ -63,31 +63,31 @@ def events_list(request):
     if request.method == 'POST':
         if request.POST.get('sport_category') == 'All':
             qs = models.Event.objects.all()
-            wybrana_wartosc = 'All'
+            sport = 'All'
         else:
-            wybrana_wartosc = request.POST.get('sport_category')
+            sport = request.POST.get('sport_category')
             sport_category_query = request.POST.get('sport_category')
             qs = models.Event.objects.filter(facility__sport__name=sport_category_query)
     else:
-        wybrana_wartosc = None
+        sport = None
         qs = models.Event.objects.all()
     context = {
         'queryset': qs,
-        'wybrana_wartosc': wybrana_wartosc
+        'sport': sport
     }
     return render(request, "events_list.html", context)
 
 
 @login_required
 def create_event(request):
-    form = forms.CreateEventForm
+    form = forms.CreateEventForm()
     if request.method == 'POST':
         form = forms.CreateEventForm(request.POST)
         if form.is_valid():
             new_event = form.save(commit=False)
             new_event.organizer = request.user
             new_event.save()
-            new_event.participants.add(new_event.organizer.profile)
+            new_event.participants.add(new_event.organizer)
             new_event.save()
             return redirect('events_list')
     return render(request, "create_event.html", {'form': form})
@@ -104,10 +104,10 @@ def event_details(request, pk):
 @login_required
 def join_event(request, event_id):
     event = models.Event.objects.get(id=event_id)
-    profile = request.user.profile
+    user = request.user
 
-    if profile not in event.participants.all():
-        event.participants.add(profile)
+    if user not in event.participants.all():
+        event.participants.add(user)
         event.save()
 
     return redirect('events_list')
@@ -115,10 +115,10 @@ def join_event(request, event_id):
 @login_required
 def leave_event(request, event_id):
     event = models.Event.objects.get(id=event_id)
-    profile = request.user.profile
+    user = request.user
 
-    if profile in event.participants.all():
-        event.participants.remove(profile)
+    if user in event.participants.all():
+        event.participants.remove(user)
         event.save()
 
     return redirect(request.META.get("HTTP_REFERER"))
@@ -130,34 +130,34 @@ def my_events(request, pk):
         sport_query = request.POST.get('sport_category')
         status_query = request.POST.get('user_event_status')
         if sport_query == 'All' and status_query == 'all':
-            wybrana_wartosc1 = 'All'
-            wybrana_wartosc2 = 'all'
+            sport = 'All'
+            status = 'all'
         elif sport_query == 'All' and status_query != 'all':
-            wybrana_wartosc1 = 'All'
-            wybrana_wartosc2 = status_query
+            sport = 'All'
+            status = status_query
             if status_query == 'organizer':
                 events = events.filter(organizer__id=pk)
             elif status_query == 'participant':
                 events = events.exclude(organizer__id=pk)
         elif sport_query != 'All' and status_query == 'all':
             events = events.filter(facility__sport__name=sport_query)
-            wybrana_wartosc1 = sport_query
-            wybrana_wartosc2 = 'all'
+            sport = sport_query
+            status = 'all'
         else:
             events = events.filter(facility__sport__name=sport_query)
-            wybrana_wartosc1 = sport_query
-            wybrana_wartosc2 = status_query
+            sport = sport_query
+            status = status_query
             if status_query == 'organizer':
                 events = events.filter(organizer__id=pk)
             elif status_query == 'participant':
                 events = events.exclude(organizer__id=pk)
     else:
-        wybrana_wartosc1 = None
-        wybrana_wartosc2 = None
+        sport = None
+        status = None
     context = {
         'events': events,
-        'wybrana_wartosc1': wybrana_wartosc1,
-        'wybrana_wartosc2': wybrana_wartosc2
+        'sport': sport,
+        'status': status
     }
     return render(request, 'my_events.html', context)
 

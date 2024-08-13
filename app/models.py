@@ -52,10 +52,10 @@ class Facility(models.Model):
 class Event(models.Model):
     organizer = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     facility = models.ForeignKey(Facility, on_delete=models.DO_NOTHING)
-    date = models.DateField(default="")
-    time = models.TimeField(default="")
+    date = models.DateField(null=True)
+    time = models.TimeField(null=True)
     estimated_time = models.IntegerField(choices=((30, "30"), (45, "45"), (60, "60"), (75, "75"), (90, "90"),
                                                   (105, "105"), (120, "120"), (135, "135"), (150, "150")))
     max_participants = models.IntegerField()
     description = models.TextField(null=True, blank=True)
-    participants = models.ManyToManyField(Profile, blank=True)
+    participants = models.ManyToManyField(User, blank=True, related_name='participants')
