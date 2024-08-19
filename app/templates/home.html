@@ -4,55 +4,106 @@
 
 
 {% block head %}
-    <link rel="stylesheet" href="/static/home.css">
 {% endblock %}
 
 
 {% block content %}
-    <div class="container">
-        <h2 class="welcome">Witaj w Sports Joiner!</h2>
-        <div class="content">
-            <div class="block">
-                <h3 class="title">O Projekcie</h3>
-                <p>W dzisiejszym świecie pełnym cyfryzacji zaczynają zanikać podstawowe wartości relacji międzyludzkich.
-                    Większość coraz rzadziej się integruje, przez co pozostają w samotności. Odnotować można również
-                    niski współczynnik zainteresowania sportem wśród ludzi. Mowa oczywiście o aktywnym udziale a nie biernym
-                    śledzeniem rozgrywek w telewizji. Aby zapobiec obydwum powyższym problemom przychodzę do Was z tą o to aplikacją.
-                    Ma ona na celu zadbać o ludzkie zdrowie, zaowocować nowymi znajomościami a nawet wykształcić przyszłe gwiazdy sportowe.</p>
-            </div>
-            <div class="block">
-                <h3 class="title">Statystyki</h3>
-                <p>Aplikcja działa od bardzo niedawna, za to niezwykle dynamicznie się rozwija. Od wdrożenia jej w życie dołączyło już
-                    {% total_users %} użytkowników! Z dnia na dzień widać nadzieję na powodzenie misji jakie ma do spełnienia ta aplikacja.</p>
-                <h3 class="todays-statistics">Dane z dnia: {% now 'd/m/Y' %}</h3>
-                <span>Ilość planowanych wydarzeń: {% todays_events %}</span>
-                <span>Ilość nowych użytkowników: {% todays_users %}</span>
-            </div>
-            <div class="block">
-                <h3 class="title">Co nowego nadchodzi?</h3>
-                <p style="margin-bottom: 2rem;">Plan rozwoju aplikacji sięga najbliższych kilku lat aczkolwiek już teraz mogę się z wami podzielić następnymi najbliższymi
-                    zmianami!</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Podgląd historii odbytych wydarzeń</li>
-                    <li class="list-group-item">Połączenie systemu rezerwacji z systemem opłat za obiekry płatne</li>
-                    <li class="list-group-item">Zwiększenie liczby dostępnych obiektów w aplikacji</li>
-                </ul>
-            </div>
-            <div class="block">
-                <h3 class="title">Dołącz już teraz</h3>
-                <p>Nie zwlekaj i dołącz do Sports Joiner - jedynej i najlepszej aplikacji łączącej ludzi ze sportem!</p>
-                <div class="button">
-                    <a class="btn btn-primary" href="{% url 'sign_up' %}">Dołącz</a>
+<!--    <div class="container">-->
+<!--        <h2 class="welcome">Witaj w Sports Joiner!</h2>-->
+<!--        <div class="content">-->
+<!--            <div class="block">-->
+<!--                <h3 class="title">O Projekcie</h3>-->
+<!--                <p>W dzisiejszym świecie pełnym cyfryzacji zaczynają zanikać podstawowe wartości relacji międzyludzkich.-->
+<!--                    Większość coraz rzadziej się integruje, przez co pozostają w samotności. Odnotować można również-->
+<!--                    niski współczynnik zainteresowania sportem wśród ludzi. Mowa oczywiście o aktywnym udziale a nie biernym-->
+<!--                    śledzeniem rozgrywek w telewizji. Aby zapobiec obydwum powyższym problemom przychodzę do Was z tą o to aplikacją.-->
+<!--                    Ma ona na celu zadbać o ludzkie zdrowie, zaowocować nowymi znajomościami a nawet wykształcić przyszłe gwiazdy sportowe.</p>-->
+<!--            </div>-->
+<!--            <div class="block">-->
+<!--                <h3 class="title">Statystyki</h3>-->
+<!--                <p>Aplikcja działa od bardzo niedawna, za to niezwykle dynamicznie się rozwija. Od wdrożenia jej w życie dołączyło już-->
+<!--                    {% total_users %} użytkowników! Z dnia na dzień widać nadzieję na powodzenie misji jakie ma do spełnienia ta aplikacja.</p>-->
+<!--                <h3 class="todays-statistics">Dane z dnia: {% now 'd/m/Y' %}</h3>-->
+<!--                <span>Ilość planowanych wydarzeń: {% todays_events %}</span>-->
+<!--                <span>Ilość nowych użytkowników: {% todays_users %}</span>-->
+<!--            </div>-->
+<!--            <div class="block">-->
+<!--                <h3 class="title">Co nowego nadchodzi?</h3>-->
+<!--                <p style="margin-bottom: 2rem;">Plan rozwoju aplikacji sięga najbliższych kilku lat aczkolwiek już teraz mogę się z wami podzielić następnymi najbliższymi-->
+<!--                    zmianami!</p>-->
+<!--                <ul class="list-group list-group-flush">-->
+<!--                    <li class="list-group-item">Podgląd historii odbytych wydarzeń</li>-->
+<!--                    <li class="list-group-item">Połączenie systemu rezerwacji z systemem opłat za obiekry płatne</li>-->
+<!--                    <li class="list-group-item">Zwiększenie liczby dostępnych obiektów w aplikacji</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--            <div class="block">-->
+<!--                <h3 class="title">Dołącz już teraz</h3>-->
+<!--                <p>Nie zwlekaj i dołącz do Sports Joiner - jedynej i najlepszej aplikacji łączącej ludzi ze sportem!</p>-->
+<!--                <div class="button">-->
+<!--                    <a class="btn btn-primary" href="{% url 'sign_up' %}">Dołącz</a>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <p>Jeśli posiadasz już konto - zaloguj się. Śmiało!</p>-->
+<!--                <div class="button">-->
+<!--                    <a class="btn btn-primary" href="{% url 'login' %}">Zaloguj się</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <!-- Nagłówek -->
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1>Witaj w Sports Joiner!</h1>
+            <p class="lead">Złącz się z ludźmi, którzy kochają ten sam sport co Ty!</p>
+            <a href="#" class="btn btn-light btn-lg mt-3">Dołącz teraz</a>
+        </div>
+    </header>
+
+    <!-- Sekcja z kartami sportów -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Piłka nożna">
+                        <div class="card-body">
+                            <h5 class="card-title">Piłka nożna</h5>
+                            <p class="card-text">Znajdź graczy, dołącz do drużyny lub organizuj mecze.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Więcej</a>
+                        </div>
+                    </div>
                 </div>
-                <br>
-                <br>
-                <br>
-                <br>
-                <p>Jeśli posiadasz już konto - zaloguj się. Śmiało!</p>
-                <div class="button">
-                    <a class="btn btn-primary" href="{% url 'login' %}">Zaloguj się</a>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Koszykówka">
+                        <div class="card-body">
+                            <h5 class="card-title">Koszykówka</h5>
+                            <p class="card-text">Dołącz do lokalnych gier lub twórz własne.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Więcej</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Tenis">
+                        <div class="card-body">
+                            <h5 class="card-title">Tenis</h5>
+                            <p class="card-text">Szukaj partnerów do gry i umawiaj się na mecze.</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">Więcej</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

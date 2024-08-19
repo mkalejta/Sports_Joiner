@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load my_filters %}
+{% block title %}About Us{% endblock %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<!-- Sekcja Kontakt -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Skontaktuj się z nami</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Informacje kontaktowe</h3>
+                    <p><strong>Adres:</strong> ul. Sportowa 10, 00-000 Warszawa</p>
+                    <p><strong>Telefon:</strong> +48 123 456 789</p>
+                    <p><strong>Email:</strong> kontakt@sportsjoiner.pl</p>
+                    <p><strong>Godziny pracy:</strong> Poniedziałek - Piątek: 9:00 - 17:00</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Formularz kontaktowy</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Imię i nazwisko</label>
+                            <input type="text" class="form-control" id="name" placeholder="Wpisz swoje imię i nazwisko">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Adres email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Wpisz swój email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Wiadomość</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Wpisz swoją wiadomość"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Wyślij</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
