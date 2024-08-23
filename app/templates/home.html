@@ -1,9 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 {% load my_filters %}
 {% block title %}Strona Główna{% endblock %}
 
 
 {% block head %}
+    <link href="{% static 'home.css' %}" rel="stylesheet">
 {% endblock %}
 
 
@@ -59,7 +61,7 @@
         <div class="container">
             <h1>Witaj w Sports Joiner!</h1>
             <p class="lead">Złącz się z ludźmi, którzy kochają ten sam sport co Ty!</p>
-            <a href="#" class="btn btn-light btn-lg mt-3">Dołącz teraz</a>
+            <a href="{% url 'sign_up' %}" class="btn btn-light btn-lg mt-3">Dołącz teraz</a>
         </div>
     </header>
 
@@ -69,7 +71,7 @@
             <div class="row text-center">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Piłka nożna">
+                        <img src="{% static 'images/pilka_nozna.jpg' %}" class="card-img-top" alt="Piłka nożna">
                         <div class="card-body">
                             <h5 class="card-title">Piłka nożna</h5>
                             <p class="card-text">Znajdź graczy, dołącz do drużyny lub organizuj mecze.</p>
@@ -81,7 +83,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Koszykówka">
+                        <img src="{% static 'images/koszykowka.jpg' %}" class="card-img-top" alt="Koszykówka">
                         <div class="card-body">
                             <h5 class="card-title">Koszykówka</h5>
                             <p class="card-text">Dołącz do lokalnych gier lub twórz własne.</p>
@@ -93,9 +95,9 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Tenis">
+                        <img src="{% static 'images/siatkowka.jpg' %}" class="card-img-top" alt="Siatkówka">
                         <div class="card-body">
-                            <h5 class="card-title">Tenis</h5>
+                            <h5 class="card-title">Siatkowka</h5>
                             <p class="card-text">Szukaj partnerów do gry i umawiaj się na mecze.</p>
                         </div>
                         <div class="card-footer">

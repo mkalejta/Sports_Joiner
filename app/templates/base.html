@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'base.css' %}" rel="stylesheet">
     {% block head %}
     {% endblock %}
 </head>
@@ -13,36 +14,7 @@
     {% block style %}
     {% endblock %}
 </style>
-<body>
-<!--     <nav class="navbar navbar-expand-lg ">-->
-<!--         <div class="container">-->
-<!--             <a class="navbar-brand" href="{% url 'home' %}">-->
-<!--                <img class="rounded-photo logo" src="{% static 'images/logo.jpg' %}">-->
-<!--             </a>-->
-<!--             <ul class="navbar-nav ms-auto">-->
-<!--                <li class="nav-item">-->
-<!--                    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Strona Główna</a>-->
-<!--                </li>-->
-<!--                 <li class="nav-item">-->
-<!--                    <a class="nav-link" aria-current="page" href="{% url 'events_list' %}">Wydarzenia</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item dropdown">-->
-<!--                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--                        Profil-->
-<!--                    </a>-->
-<!--                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">-->
-<!--                    {% if not request.user.is_authenticated %}-->
-<!--                        <li><a class="dropdown-item" href="{% url 'sign_up' %}">Rejestracja</a></li>-->
-<!--                        <li><a class="dropdown-item" href="{% url 'login' %}">Logowanie</a></li>-->
-<!--                    {% else %}-->
-<!--                        <li><a class="dropdown-item" href="{% url 'user_dashboard' request.user.id %}">Panel Główny</a></li>-->
-<!--                        <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj</a></li>-->
-<!--                    {% endif %}-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--             </ul>-->
-<!--	    </div>-->
-<!--	 </nav>-->
+<body class="d-flex flex-column h-100">
     <!-- Nawigacja -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -55,26 +27,32 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Strona główna</a>
                     </li>
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'events_list' %}">Wydarzenia</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about_us' %}">O nas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'contact' %}">Kontakt</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Profil
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            {% if not request.user.is_authenticated %}
-                                <li><a class="dropdown-item" href="{% url 'sign_up' %}">Rejestracja</a></li>
-                                <li><a class="dropdown-item" href="{% url 'login' %}">Logowanie</a></li>
-                            {% else %}
+                    {% if not request.user.is_authenticated %}
+                    <li>
+                        <a class="nav-link" href="{% url 'login' %}">Logowanie</a>
+                    </li>
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profil
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
                                 <li><a class="dropdown-item" href="{% url 'user_dashboard' request.user.id %}">Panel Główny</a></li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj</a></li>
-                            {% endif %}
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -84,12 +62,8 @@
         {% block content %}{% endblock %}
     </main>
 
-<!--    <footer>-->
-<!--        <div><img src="{% static 'images/email.png' %}" alt="email" style="height: 30px; width: 30px;"><a href="mailto:kalejtamikolaj@wp.pl" style="color: black;">kalejtamikolaj@wp.pl</a></div>-->
-<!--    </footer>-->
-
     <!-- Stopka -->
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="footer mt-auto bg-dark text-white text-center py-3">
         <div class="container">
             <p class="mb-0">&copy; 2024 Sports Joiner. Wszystkie prawa zastrzeżone.</p>
             <p class="mb-0">Znajdź nas na <a href="#" class="text-white">Facebooku</a> i <a href="#" class="text-white">Instagramie</a>.</p>
